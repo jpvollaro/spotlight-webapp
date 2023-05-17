@@ -1,0 +1,170 @@
+// This Jenkinsfile was built to work with multi-branch pipeline job
+// This will extract the branch name based on Git Flow to be used 
+//     for docker image tags and environment deployments
+String safeBranchName = env.BRANCH_NAME.replaceAll("[/_.\$%^&*()@!]","-")
+String openshiftCredential='<openshift_credential_id>'
+String openshiftAppName='<enter name for app>' // used for both docker repo and openshift application name 1:1
+
+String dockerCredential='<docker credential id>'
+String dockerOrg='<docker org>'
+String dockerPath="docker.optum.com/$dockerOrg/$openshiftAppName:$safeBranchName" // ORG AND REPO MUST EXIST
+
+String jenkinsBuildEmailTo='<add jenkins email address>'
+
+@Library("com.optum.jenkins.pipeline.library@master") _
+
+pipeline {
+  agent {
+    label '<enter docker swarm agent>'
+  }
+  environment {
+    NODE_TLS_REJECT_UNAUTHORIZED=0 // Needed to download chromium from docker container
+  }
+
+    stages {
+        stage ('Build') {
+            steps {
+                // If angular builds step fails during npm install, try using the following parameter 
+                // for glAngularCliBuild additionalNpmOptions: "--unsafe-perm"
+                // per this article https://github.com/sass/node-sass/issues/1847
+                script {
+                    if (env.BRANCH_NAME.contains('feature/')) {
+                        glAngularCliBuild angularCliVersion: "6.1.1", buildForEnvironment: "dev", additionalNpmOptions: "--unsafe-perm"
+                    }
+                    else if (env.BRANCH_NAME == 'develop') {
+                        glAngularCliBuild angularCliVersion: "6.1.1", buildForEnvironment: "test", additionalNpmOptions: "--unsafe-perm"
+                    }
+                    else if (env.BRANCH_NAME.contains('release')) {
+                        glAngularCliBuild angularCliVersion: "6.1.1", buildForEnvironment: "stage", additionalNpmOptions: "--unsafe-perm"
+                    }
+                    else if (env.BRANCH_NAME == 'master') {
+                        glAngularCliBuild angularCliVersion: "6.1.1", buildForEnvironment: "production", additionalNpmOptions: "--unsafe-perm"
+                    }
+                    else{
+                        error('Nothing was built because there isn\'t a Build pipeline step defined for branch: '+ env.BRANCH_NAME)
+                    }
+                }
+            }
+        }
+        stage ('Unit Test') {
+            steps {
+                glAngularCliTest angularCliVersion: "6.1.1", generateCodeCoverage: true
+                archiveArtifacts artifacts:  '_reports/**/html-results.html'
+            }
+        }
+        stage ('Publish To Sonar')
+        {
+            steps {
+                script {
+                    if (env.BRANCH_NAME.contains('feature/')) {   
+                        glSonarScanWithPropertiesFile sonarServer: '<sonar endpoint configured in jenkins>', sonarTool: '<sonar scanner tool configured in jenkins>'
+                    }
+                    else if (env.BRANCH_NAME == 'develop') {
+                        glSonarScanWithPropertiesFile sonarServer: '<sonar endpoint configured in jenkins>', sonarTool: '<sonar scanner tool configured in jenkins>'
+                    }
+                    else if (env.BRANCH_NAME.contains('release')) {
+                        glSonarScanWithPropertiesFile sonarServer: '<sonar endpoint configured in jenkins>', sonarTool: '<sonar scanner tool configured in jenkins>'
+                    }
+                    else if (env.BRANCH_NAME == 'master') {
+                        glSonarScanWithPropertiesFile sonarServer: '<sonar endpoint configured in jenkins>', sonarTool: '<sonar scanner tool configured in jenkins>'
+                    }
+                    else{
+                        error('Nothing published to SonarQube because there isn\'t an Publish to Sonar pipeline step defined for branch: '+ env.BRANCH_NAME)
+                    }
+                }
+            }
+        }
+        stage ('Docker') {
+            steps {
+                glDockerImageBuildPush( tag: "$dockerPath", dockerCredentialsId: "$dockerCredential") 
+            }
+        }
+        stage ('Deploy To OSE') {
+            steps {
+                script {
+                    if (env.BRANCH_NAME.contains('feature/')) {   
+                        def openshiftUrl='<openshift url for dev>'
+                        def openshiftProject = '<openshift project name>'
+                        // delete resources if they exist
+                        glOpenshiftDeleteServiceResources credentials: "$openshiftCredential" ,
+                            ocpUrl:"$openshiftUrl",
+                            project: "$openshiftProject",
+                            serviceName: "$openshiftAppName"
+                        
+                        glOpenshiftDeployTemplate( credentials: "$openshiftCredential",
+                            templateFile: 'ui-deploy.yaml', ocpUrl:"$openshiftUrl", 
+                            project: "$openshiftProject", 
+                            templateParams: ["DOCKER_PATH_AND_IMAGE":"$dockerPath", "OPENSHIFT_APP_NAME":"$openshiftAppName"])     
+                    }
+                    else if (env.BRANCH_NAME == 'develop') {
+                        def openshiftUrl='<openshift url for test>'
+                        def openshiftProject = '<openshift project name>'
+                        // delete resources if they exist
+                        glOpenshiftDeleteServiceResources credentials: "$openshiftCredential" ,
+                            ocpUrl:"$openshiftUrl",
+                            project: "$openshiftProject",
+                            serviceName: "$openshiftAppName"
+                        
+                        glOpenshiftDeployTemplate( credentials: "$openshiftCredential",
+                            templateFile: 'ui-deploy.yaml', ocpUrl:"$openshiftUrl", 
+                            project: "$openshiftProject", 
+                            templateParams: ["DOCKER_PATH_AND_IMAGE":"$dockerPath", "OPENSHIFT_APP_NAME":"$openshiftAppName"])
+                    }
+                    else if (env.BRANCH_NAME.contains('release')) {
+                        def openshiftUrl='<openshift url for stage>'
+                        def openshiftProject = '<openshift project name>'
+                        // delete resources if they exist
+                        glOpenshiftDeleteServiceResources credentials: "$openshiftCredential" ,
+                            ocpUrl:"$openshiftUrl",
+                            project: "$openshiftProject",
+                            serviceName: "$openshiftAppName"
+
+                        glOpenshiftDeployTemplate( credentials: "$openshiftCredential",
+                            templateFile: 'ui-deploy.yaml', ocpUrl:"$openshiftUrl", 
+                            project: "$openshiftProject", 
+                            templateParams: ["DOCKER_PATH_AND_IMAGE":"$dockerPath", "OPENSHIFT_APP_NAME":"$openshiftAppName"])
+                    }
+                    else if (env.BRANCH_NAME == 'master') {
+                        error('Remove this after initial scan by multi-branch pipeline')
+                        def openshiftUrl='<openshift url for prod>'
+                        def openshiftProject = '<openshift project name>'
+                        // delete resources if they exist
+                        glOpenshiftDeleteServiceResources credentials: "$openshiftCredential" ,
+                            ocpUrl:"$openshiftUrl",
+                            project: "$openshiftProject",
+                            serviceName: "$openshiftAppName"
+                        
+                        glOpenshiftDeployTemplate( credentials: "$openshiftCredential",
+                            templateFile: 'ui-deploy.yaml', ocpUrl:"$openshiftUrl", 
+                            project: "$openshiftProject", 
+                            templateParams: ["DOCKER_PATH_AND_IMAGE":"$dockerPath", "OPENSHIFT_APP_NAME":"$openshiftAppName"])
+                        }
+                    else {
+                        error('Nothing deployed to OSE because there isn\'t a Deploy to OSE pipeline step defined for branch: '+ env.BRANCH_NAME)
+                    }
+                }
+            }
+        }         
+    }
+    post {
+        always {
+            echo 'This will always run'
+            emailext body:  "Build URL: ${BUILD_URL}",
+            subject: "$currentBuild.currentResult-$JOB_NAME",
+            to: "$jenkinsBuildEmailTo"
+        }
+        success {
+            echo 'This will run only if successful'
+        }
+        failure {
+            echo 'This will run only if failed'
+        }
+        unstable {
+            echo 'This will run only if the run was marked as unstable'
+        }
+        changed {
+            echo 'This will run only if the state of the Pipeline has changed'
+            echo 'For example, if the Pipeline was previously failing but is now successful'
+        }
+    }
+}

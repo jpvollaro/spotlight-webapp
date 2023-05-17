@@ -1,0 +1,13 @@
+<uitk-dynamic-table id="plainTableSearchSort" #dt [model]="modelFour" [columns]="columns"
+    [records]="records"> 
+    <uitk-column-def [id]="columns[4].id">
+        <ng-template #cellTemplate let-col="column" let-record="record">
+            <img src={{starRatings[record[col.id]]}} alt="{{record[col.id]}}" />
+        </ng-template>
+    </uitk-column-def>  
+    <uitk-column-def [id]="columns[0].id">
+        <ng-template #cellTemplate let-col="column" let-record="record">
+            <span>{{record[col.id]}}</span>
+        </ng-template>
+    </uitk-column-def>
+</uitk-dynamic-table>

@@ -1,0 +1,160 @@
+@import './variables';
+/**
+* apply box shadow
+* @param {color} color - color of boxshadow
+*/
+
+@mixin box-shadow($color: rgba(0, 0, 0, 0.05)) {
+  box-shadow: 0 2px 5px 0 $color;
+}
+
+/**
+* create button
+* @param {color} c - color set of button (background, hover, color)
+* @param {value} w - button width
+* @param {value} h - button height
+* @param {value} b - button border
+*/
+
+@mixin text($c, $fs) {
+  font-family: $ex-font-family;
+  font-size: $fs;
+  font-style: normal;
+  font-stretch: normal;
+  letter-spacing: normal;
+  color: $c;
+}
+
+/**
+* Display a empty layout front of an element
+* @param {color} c - color of layout
+*/
+
+@mixin front-layout($c) {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: $c;
+}
+
+/// Block Element
+/// @access public
+/// @param {String} $element - Element's name
+@mixin element($element) {
+  &__#{$element} {
+    @content;
+  }
+}
+
+/// Block Modifier
+/// @access public
+/// @param {String} $modifier - Modifier's name
+@mixin modifier($modifier) {
+  &_#{$modifier} {
+    @content;
+  }
+}
+
+/// @alias element
+@mixin e($element) {
+  @include element($element) {
+    @content;
+  }
+}
+
+/// @alias modifier
+@mixin m($modifier) {
+  @include modifier($modifier) {
+    @content;
+  }
+}
+
+/// Create a host deep
+/// @access public
+@mixin deep() {
+  :host {
+    &/deep/ {
+      @content;
+    }
+  }
+}
+
+/// color access
+/// @access public
+/// @param {string} $color-name - color name
+/// @param {color} $color - color code
+@mixin color($color-name, $color) {
+  &.#{$color-name} {
+    @include modifier('bg') {
+      background-color: $color;
+    }
+    @include modifier('text') {
+      color: $color;
+    }
+  }
+}
+
+/* BOW SHADOW */
+@mixin drop-shadow($shadow: 0.1875rem 0.1875rem 0.1875rem 0 rgba(192, 192, 192, 0.75)) {
+  box-shadow: $shadow;
+  -moz-box-shadow: $shadow;
+  -webkit-box-shadow: $shadow;
+}
+
+@mixin inner-shadow($arguments: 0 0 0 0.0625rem, $color: $white) {
+  box-shadow: inset $arguments $color;
+  -moz-box-shadow: inset $arguments $color;
+  -webkit-box-shadow: inset $arguments $color;
+}
+
+/* BORDER RADIUS */
+@mixin rounded($radius: 0.125rem) {
+  border-radius: $radius;
+  -moz-border-radius: $radius;
+  -webkit-border-radius: $radius;
+}
+
+/* GRADIENTS */
+@mixin gradient($origin: bottom, $start: $grey7, $stop: $grey6) {
+  background-color: $start;
+  background-image: -webkit-linear-gradient($origin, $start, $stop);
+  background-image: -moz-linear-gradient($origin, $start, $stop);
+  background-image: -o-linear-gradient($origin, $start, $stop);
+  background-image: -ms-linear-gradient($origin, $start, $stop);
+  background-image: linear-gradient($origin, $start, $stop);
+}
+
+/* BOX SIZING */
+@mixin box-sizing($type: border-box) {
+  -webkit-box-sizing: $type;
+  -moz-box-sizing: $type;
+  box-sizing: $type;
+}
+
+/* TRANSITION */
+@mixin transition($prop: top, $time: 0.5s, $ease: left) {
+  -webkit-transition: $prop $time $ease;
+  -moz-transition: $prop $time $ease;
+  -o-transition: $prop $time $ease;
+  -ms-transition: $prop $time $ease;
+  transition: $prop $time $ease;
+}
+
+/* TRANSFORM */
+@mixin transform($rotate: 0deg, $scale: 1, $skew: 0deg, $translate: 360deg) {
+  -webkit-transform: rotate($rotate) scale($scale) skew($skew) translate($translate);
+  -moz-transform: rotate($rotate) scale($scale) skew($skew) translate($translate);
+  -o-transform: rotate($rotate) scale($scale) skew($skew) translate($translate);
+  -ms-transform: rotate($rotate) scale($scale) skew($skew) translate($translate);
+  transform: rotate($rotate) scale($scale) skew($skew) translate($translate);
+}
+
+@mixin no-outline {
+  outline: none !important;
+}
+
+@mixin pointer {
+  cursor: pointer;
+}

@@ -1,0 +1,117 @@
+@import './src/style/abstracts/variables';
+
+::ng-deep .tk-vnav, ::ng-deep .tk-vnav li {
+    transition: width .1s;
+}
+
+.vertical-nav-container {
+    background: $white;
+    flex: 0 0 260px;
+    width: $menu-width;
+    border-right: 1px solid gray;
+    transition: width .1s;
+    height: 100%;
+    .vertical-nav-toggler {
+        width: 100%;
+        border: none;
+        height: 2.5rem;
+        border-top: 1px solid $grey5;
+        border-bottom: 1px solid $grey5;
+        outline: none;
+        position: relative;
+        cursor: pointer;
+        ::ng-deep .tk-icon {
+        cursor: pointer;
+        [class*=" cux-icon-"], 
+        [class^=cux-icon-] {
+            position: absolute;
+            right: 1rem;
+            top: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            }
+        }
+  }
+  &.vertical-nav-collapse {
+    width: 55px;
+    ::ng-deep .tk-vnav, ::ng-deep .tk-vnav li {
+        width: 55px;
+    }
+    ::ng-deep .tk-vnav .hide-on-collapse {
+        display: none;
+    }
+    ::ng-deep .tk-vnav > li ul > li {
+        width: 100%;
+    }
+    ::ng-deep .tk-vnav > li ul > li > a {
+        margin-left: 0;
+        uitk-icon-font {
+            display:none;
+        }
+    }
+    ::ng-deep .uimf-icon-caret_down_centered,
+    ::ng-deep .uimf-icon-caret_right,
+    ::ng-deep .uimf-icon-caret_right,
+    ::ng-deep .uimf-icon-caret_down_centered  {
+        display: none;
+    }
+    ::ng-deep .menuVisible {
+        display: inline-block;
+        min-width: 260px;
+        width: 260px;
+        visibility: visible;
+        position: absolute;
+        border: 1px solid gray;
+        background: #fff;
+        z-index: 9999;
+        margin-top: -2.55rem;
+        margin-left: 3.5rem;
+        ul {
+            position: absolute;
+            margin-left: 16.25rem;
+            margin-top: -2.3rem;
+        }
+    }
+  }
+
+  ::ng-deep .tk-vnav > li {
+    &:first-child, ul {
+      border-top: 1px solid transparent;
+    }
+  }
+
+  ::ng-deep .tk-vnav > li ul > li > a {
+    color: $grey5;
+    line-height: 1.2rem;
+    padding: .5rem 1rem;
+    margin-left: 2rem;
+  }
+
+  ::ng-deep .tk-vnav > li.tk-nav-selected > a, ::ng-deep .tk-vnav > li > a:focus, ::ng-deep .tk-vnav > li > a:hover,
+  ::ng-deep .tk-vnav > li ul > li.tk-nav-selected > a, ::ng-deep .tk-vnav > li ul > li a:focus, ::ng-deep .tk-vnav > li ul > li a:hover {
+    color: $grey2;
+  }
+
+  ::ng-deep .tk-vnav {
+    [class*=" uimf-icon-"], [class^=uimf-icon-] {
+      margin-right: 15px;
+      font-size: 1rem;
+      font-weight: bold;
+    }
+  }
+
+  ::ng-deep .tk-vnav > li.tk-nav-selected > a, ::ng-deep .tk-vnav > li > a:focus, ::ng-deep .tk-vnav > li > a:hover {
+    [class*=" uimf-icon-"], [class^=uimf-icon-] {
+      color: $grey2;
+    }
+  }
+
+  ::ng-deep .tk-vnav {
+    margin-top: -5px;
+    [class*=" uimf-icon-caret_right"], [class^=uimf-icon-caret_right],
+    [class*=" uimf-icon-caret_down_centered"], [class^=uimf-icon-caret_down_centered] {
+      font-size: 1.5rem;
+    }
+  }
+
+}

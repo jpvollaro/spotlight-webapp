@@ -1,0 +1,7 @@
+<div class="vertical-nav-container" [ngClass]="{ 'vertical-nav-collapse' : collapseVerticalNav }">
+  <button (click)="toggleVerticalNav()" class="vertical-nav-toggler">
+    <uitk-icon-font *ngIf="collapseVerticalNav" icon="cux-icon-arrow_right" hiddenText="arrow right"></uitk-icon-font>
+    <uitk-icon-font *ngIf="!collapseVerticalNav" icon="cux-icon-arrow_left" hiddenText="arrow left"></uitk-icon-font>
+  </button>
+    <uitk-navigation menuType="vertical" [model]="sideNavModel"></uitk-navigation>
+  </div>

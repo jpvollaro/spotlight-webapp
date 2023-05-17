@@ -1,0 +1,46 @@
+@import './src/style/abstracts/variables';
+
+.opi-uitk-starter-container {
+  border-bottom: 4px solid $grey2;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  min-height: 91vh;
+  .opi-uitk-starter-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex: 1 1 auto;
+  }
+}
+
+uitk-footer {
+  text-align: center;
+}
+
+:host ::ng-deep uitk-header {
+  header {
+    img {
+      margin-top: 0.8rem;
+      margin-left: 0.25rem;
+      padding-bottom: 1.2rem;
+    }
+  }
+
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    .application-title {
+      padding: 1rem;
+      display: flex;
+      .spacer {
+        border-left: 2px solid $grey3;
+      }
+      .title {
+        padding-top: 0.5rem;
+        margin-left: 0.5rem;
+        color: $grey3;
+      }
+    }
+  }
+}

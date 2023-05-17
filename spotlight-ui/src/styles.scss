@@ -1,0 +1,44 @@
+/* Import UITK styles */
+@import '../node_modules/@uimf/uitk/styles/themes/standard.css';
+@import '../node_modules/@uimf/icons/webfonts/stylesheets/micro-interaction-icons.css';
+@import './src/style/abstracts/abstracts-dir';
+@import './src/style/components/components-dir';
+
+app-login {
+  width:100%;
+}
+
+
+.opi-uitk-starter-main {
+  display: flex;
+  flex-direction: column;
+}
+
+.opi-uitk-starter-vnav {
+    box-shadow: 3px 0 10px 0 hsla(0,0%,75%,.4);
+    -moz-box-shadow: 3px 0 10px 0 hsla(0,0%,75%,.4);
+    -webkit-box-shadow: 3px 0 10px 0 hsla(0,0%,75%,.4);
+    padding: 2rem 1rem;
+    z-index: 9999;
+}
+
+.opi-uitk-starter-content {
+  @include box-sizing();
+  display: flex;
+  flex: 1 0 60%;
+  flex-direction: column;
+  padding: 2rem 0 2rem 4rem;
+}
+
+.background-size {
+  background-size: cover;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-repeat: no-repeat;
+}
+
+/** Style to hide overflow x (right/left) */
+body {
+  overflow-x: hidden;
+}

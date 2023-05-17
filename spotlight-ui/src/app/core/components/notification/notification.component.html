@@ -1,0 +1,25 @@
+<uitk-message [id]="success" [messageType]="success.messageType" [(visible)]="success.visible" [position]="common.position" [messageRole]="common.messageRole" [closeButton]="common.closeButton" [animationType]="common.animationType"
+[animationTime]="common.animationTime" [autoClose]="common.autoClose" [messageVisibleTime]="common.messageVisibleTime">
+  <ng-container *ngTemplateOutlet="notificationTemplate"></ng-container>
+</uitk-message>
+
+<uitk-message [id]="warning" [messageType]="warning.messageType" [(visible)]="warning.visible" [position]="common.position" [messageRole]="common.messageRole" [closeButton]="common.closeButton" [animationType]="common.animationType"
+[animationTime]="common.animationTime" [autoClose]="common.autoClose" [messageVisibleTime]="common.messageVisibleTime">
+  <ng-container *ngTemplateOutlet="notificationTemplate"></ng-container>
+</uitk-message>
+
+<uitk-message [id]="error" [messageType]="error.messageType" [(visible)]="error.visible" [position]="common.position" [messageRole]="common.messageRole" [closeButton]="common.closeButton" [animationType]="common.animationType"
+[animationTime]="common.animationTime" [autoClose]="common.autoClose" [messageVisibleTime]="common.messageVisibleTime">
+  <ng-container *ngTemplateOutlet="notificationTemplate"></ng-container>
+</uitk-message>
+
+<uitk-message [id]="info" [messageType]="info.messageType" [(visible)]="info.visible" [position]="common.position" [messageRole]="common.messageRole" [closeButton]="common.closeButton" [animationType]="common.animationType"
+[animationTime]="common.animationTime" [autoClose]="common.autoClose" [messageVisibleTime]="common.messageVisibleTime">
+  <ng-container *ngTemplateOutlet="notificationTemplate"></ng-container>
+</uitk-message>
+
+
+<ng-template #notificationTemplate>
+  <span *ngIf="notificationContent?.summary"><b>{{ notificationContent.summary }}</b><br /></span>
+  <span [innerHTML]="notificationContent.detail"></span>
+</ng-template>

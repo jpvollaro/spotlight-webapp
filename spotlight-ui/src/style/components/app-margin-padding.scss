@@ -1,0 +1,45 @@
+$gutter: 1.5rem;
+@for $t from 0 through 1 {
+  @for $r from 0 through 1 {
+    @for $b from 0 through 1 {
+      @for $l from 0 through 1 {
+        $_t: 0px;
+        $_r: 0px;
+        $_b: 0px;
+        $_l: 0px;
+        @if ($t !=0) {
+          $_t: $gutter;
+        }
+        @if ($r !=0) {
+          $_r: $gutter;
+        }
+        @if ($b !=0) {
+          $_b: $gutter;
+        }
+        @if ($l !=0) {
+          $_l: $gutter;
+        }
+        .app-margin-#{$t}-#{$r}-#{$b}-#{$l} {
+          margin: $_t $_r $_b $_l;
+          &-i {
+            margin: $_t $_r $_b $_l !important;
+          }
+        }
+        .app-padding-#{$t}-#{$r}-#{$b}-#{$l} {
+          padding: $_t $_r $_b $_l;
+          &-i {
+            padding: $_t $_r $_b $_l !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+.app-margin {
+  margin: 0 $gutter;
+}
+
+.app-padding {
+  padding: 0 $gutter;
+}

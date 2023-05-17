@@ -1,0 +1,31 @@
+<div class="uitk-grid">
+  <div class="row">
+    <div class="small-col-6-8 medium-col-6-8 large-col-6-8">
+      <h2>Feature Toggle Interface</h2>
+    </div>
+    <div
+      *ngIf="appFeatures"
+      class="small-col-6-8 medium-col-6-8 large-col-6-8 layout-align-end-end layout-margin setStaticText"
+    >
+      *Once features are toggled, you will be logged out of system.
+    </div>
+
+    <div class="small-col-8-8 medium-col-8-8 large-col-8-8">
+      <ng-container *ngFor="let key of keys()">
+        <uitk-toggle-switch
+          [uitkId]="'toggleSwitchId_' + key"
+          [uitkChecked]="appFeatures[key]"
+          (uitkChange)="handleToggleChange($event, key)"
+        >
+          <!-- Toggle switch labels using content projection. specific span displayed based on the value of checked -->
+          <span *ngIf="appFeatures[key]">{{ key }} on</span>
+          <span *ngIf="!appFeatures[key]">{{ key }} off</span>
+        </uitk-toggle-switch>
+      </ng-container>
+    </div>
+
+    <div class="small-col-4-8 medium-col-4-8 large-col-4-8">
+      <uitk-button value="Save" [enableDefault]="true" [disabled]="false" (clickCallback)="submit()"></uitk-button>
+    </div>
+  </div>
+</div>

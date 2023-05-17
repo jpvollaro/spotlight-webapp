@@ -1,0 +1,46 @@
+@import './src/style/abstracts/variables';
+
+.drawer {
+    position: absolute;
+    width: 0;
+    border: 1px solid $grey5;
+    border-top: none;
+    top: 34px;
+    bottom: 76px;
+    background: #fff;
+    transition: width .5s;
+    z-index: 9999;
+    margin-right: -2rem;
+    overflow-x: hidden;
+}
+
+.right-drawer {
+    right: 0;
+}
+
+.left-drawer {
+    left:0;
+}
+
+.drawer-container.show .drawer  {
+    width: 30rem;
+    border-width: 1px;
+    margin-right:0;
+}
+
+.panel {
+    width: 30rem;
+    
+}
+:host ::ng-deep uitk-panel {
+    .tk-panl {
+        width: 30rem;
+        min-height: 44rem;
+        border-bottom: none;
+    }
+}
+
+.action-item {
+    font-size: 1.5rem;
+    cursor: pointer;
+}

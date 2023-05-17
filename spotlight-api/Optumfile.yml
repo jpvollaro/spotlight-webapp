@@ -1,0 +1,10 @@
+
+apiVersion: v1
+metadata:
+  askId: poc
+  caAgileId: poc
+  projectKey: productname:componentname
+  projectFriendlyName: friendly-name
+  projectVersion: 1.0
+  componentType: code 
+  targetQG: GATE_00

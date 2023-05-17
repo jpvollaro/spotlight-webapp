@@ -1,0 +1,56 @@
+<section class="uitk-grid">
+  <div class="row gutter">
+    <div class="small-col-8-8 medium-col-8-8 large-col-8-8">
+      <uitk-panel panelId="HeaderPanel" panelTitle="Weather API Example">
+        Panel contents would go here.
+      </uitk-panel>
+    </div>
+  </div>
+
+  <div class="row gutter">
+    <div class="small-col-8-8 medium-col-8-8 large-col-8-8">
+      <form class="form" [formGroup]="zipCodeForm" (ngSubmit)="getWeather(zipCodeForm.value)">
+
+        <div class="form-group" [ngClass]="{'has-error':!zipCodeForm.controls['zipCode'].valid && zipCodeForm.controls['zipCode'].touched}">
+          <label>Zip</label>
+          <input type="text" placeholder="Enter Zip Code" [formControl]="zipCodeForm.controls['zipCode']" name="zipCode" class="form-control">
+        </div>
+        <div class="form-group">
+
+          <button id="submit" class="tk-btn" type="submit">Get Weather</button>
+          <button type="button" class="tk-btn" (click)="mockBadCall($event)">Mock 404 Call</button>
+
+        </div>
+        <div class="form-group">
+          <div *ngIf="zipCodeForm.controls['zipCode'].hasError('pattern') && zipCodeForm.controls['zipCode'].touched" class="alert alert-danger">A valid zip code must be entered. (ex: 55442)</div>
+          <div *ngIf="zipCodeForm.controls['zipCode'].hasError('required') && zipCodeForm.controls['zipCode'].touched" class="alert alert-danger">Zip Code is required.</div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="row gutter">
+    <div class="small-col-8-8 medium-col-8-8 large-col-8-8">
+      <div class="well" *ngIf="errorMessage">
+        {{errorMessage}}
+      </div>
+    </div>
+  </div>
+
+ 
+
+  <div *ngIf="forecast" class="row gutter">
+    <div class="small-col-8-8 medium-col-8-8 large-col-8-8">
+      <uitk-panel panelId="TestPanel1" panelTitle="Overview">
+        <p>Current Weather For: {{forecast?.city}}</p>
+        <p>Description: {{forecast?.days[15]?.weatherDescription}}</p>
+        <p>Day Temp: {{forecast?.days[15]?.dayTemp}}</p>
+        <p>Night Temp: {{forecast?.days[15]?.nightTemp}}</p>
+        <p>Evening Temp: {{forecast?.days[15]?.eveningTemp}}</p>
+        <p>Min Temp: {{forecast?.days[15]?.minTemp}}</p>
+        <p>Max Temp: {{forecast?.days[15]?.maxTemp}}</p>
+      </uitk-panel>
+    </div>
+  </div>
+</section>
+

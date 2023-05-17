@@ -1,0 +1,36 @@
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { VerticalNavigationComponent } from '@app/core/components/layout/vertical-navigation/vertical-navigation.component';
+
+describe('VerticalNavigationComponent', () => {
+  let component: VerticalNavigationComponent;
+  let fixture: ComponentFixture<VerticalNavigationComponent>;
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [VerticalNavigationComponent],
+      schemas: [NO_ERRORS_SCHEMA]
+    }).compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(VerticalNavigationComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+
+  describe('toggleVerticalNav', () => {
+    it('should set collapseVerticalNav to true when inits as false value', () => {
+      const sideNavModel = {
+        id: 'testModel'
+      };
+      component.collapseOpenedMenus(sideNavModel);
+      component.toggleVerticalNav();
+      expect(component.collapseVerticalNav).toBeTruthy();
+    });
+  });
+});

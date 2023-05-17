@@ -1,0 +1,88 @@
+
+import groovy.json.JsonSlurper
+import com.optum.jenkins.pipeline.library.versions.SemVer
+import com.optum.jenkins.pipeline.library.scm.Git
+
+String jenkinsEmailTo='<add jenkins email address>'
+String safeBranchName = env.BRANCH_NAME.replaceAll("[/_.\$%^&*()@!]","-")
+
+@Library("com.optum.jenkins.pipeline.library@master") _
+
+pipeline {
+  agent {
+    label 'your-slave-agent' // needs docker and dotnet core mixin
+  }
+  environment {
+    DOCKER_IMAGE = 'docker.repo1.uhc.com/OWNER/spotlight-api'
+  }
+stages {
+    stage ('Build') {
+      steps {
+        dir('.') {
+            glDotNetCorePublish( dotNetCoreVersion: '2.2.100', additionalPublishOptions: '-o publishedApp', additionalRestoreOptions: '--configfile Api/Nuget.Config', env:'Blah', isProduction: false))
+        }
+      }
+    }
+    stage ('Sonar') {
+      steps {
+        dir('.') {
+            glSonarScannerDotnetCore( sonarServer:'sonar', dotNetCoreVersion: '2.2.100')
+        }
+      }
+    }
+    stage ('Bundle') {
+      when { branch 'master' }
+      steps {
+        script {
+          String dockerCredential='docker-credential'
+          String dockerOrg='<docker-org>'
+          String dockerImage='spotlight-api'
+          String dockerTag="$safeBranchName"
+          String dockerPath="docker.repo1.uhc.com/$dockerOrg/$dockerImage:$dockerTag"
+
+          glDockerImageBuildPush tag: "$dockerPath", dockerCredentialsId: "$dockerCredential", dockerHost: "docker.repo1.uhc.com"
+        }
+      }
+    }
+    stage ('Deploy') {
+      when { branch 'master' }
+      steps {
+        script {
+          helmParams = [credentialsId           : 'kubernetes-credential-id',
+                        cluster                 : 'k8s-prod-ctc-aci.optum.com',
+                        namespace               : 'reuse',
+                        timeout                 : 600,
+                        deploymentName          : 'spotlight-api',
+                        chartFolder             : 'helm/spotlight-api',
+                        maskInlineValuesFromLogs: true,
+                        inlineValues            : ["image.tag=${env.RELEASE_VERSION}"],
+                        valueFiles              : ['helm/spotlight-api/values.yaml', 'helm/spotlight-api/env/prod.yaml']
+              ]
+          
+          glKubernetesHelmChart helmParams
+        }
+      }
+    }        
+}  
+post {
+        always {
+            echo 'This will always run'
+		emailext body:  "Build URL: ${BUILD_URL}",
+			 subject: "$currentBuild.currentResult-$JOB_NAME",
+			 to: "$jenkinsEmailTo"
+        }
+        success {
+            echo 'This will run only if successful'
+        }
+        failure {
+            echo 'This will run only if failed'
+        }
+        unstable {
+            echo 'This will run only if the run was marked as unstable'
+        }
+        changed {
+            echo 'This will run only if the state of the Pipeline has changed'
+            echo 'For example, if the Pipeline was previously failing but is now successful'
+        }
+    }
+}

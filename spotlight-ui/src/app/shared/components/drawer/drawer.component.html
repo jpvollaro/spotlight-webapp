@@ -1,0 +1,11 @@
+<div class="drawer-container" [ngClass]="{ 'show': isVisible }">
+  <div class="drawer" [ngClass]="{'right-drawer': side === 'right', 'left-drawer': side === 'left' }">
+    <uitk-panel panelId="TestPanel1" panelTitle="{{title}}" headerClass="tk-panl-with-underline"
+                headerTitleWidth="95%" headerDetailWidth="3%">
+        <div class="panel-header-detail">
+            <uitk-icon-font icon="cux-icon-close" hiddenText="close" (click)="close()" class="action-item"></uitk-icon-font>
+        </div>
+        <ng-content></ng-content>
+    </uitk-panel>
+  </div>
+</div>

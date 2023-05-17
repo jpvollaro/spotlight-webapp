@@ -1,0 +1,36 @@
+<section class="opi-uitk-starter-main">
+  <div class="opi-uitk-starter-container">
+    <uitk-navigation menuType="global" [model]="globalNavModel"></uitk-navigation>
+    <uitk-header logo="assets/images/optum-logo.png" altText="Optum UI Toolkit" url="/" logoWidth="120px" logoHeight="30px">
+      <div class="header-container">
+        <div class="application-title">
+          <div class="spacer">&nbsp;</div>
+          <div class="title">{{ applicationName }}</div>
+        </div>
+        <div [hidden]="!showTopNav" class="navigation-container">
+          <app-primary-navigation [hidden]="!loggedIn"></app-primary-navigation>
+        </div>
+      </div>
+    </uitk-header>
+    <main class="opi-uitk-starter-wrapper">
+      <app-vertical-navigation [hidden]="!showSideNav"></app-vertical-navigation>
+      <div class="opi-uitk-starter-content" id="content">
+        <app-notification></app-notification>
+        <ng-container *appFeatureToggle="'breadcrumb'">
+          <uitk-breadcrumb></uitk-breadcrumb>
+        </ng-container>
+        <router-outlet></router-outlet>
+      </div>
+    </main>
+  </div>
+</section>
+<uitk-footer>
+  <li uitk-footer-item tkLabel="Copyright &amp; License Information" url="https://github.optum.com/UIMF/uitk4/blob/develop/COPYRIGHT.md"
+    tkTargetWindow="_blank" footer-link></li>
+  <li uitk-footer-item tkLabel="Privacy Policy" url="/privacy" footer-link></li>
+  <li uitk-footer-item tkLabel="Terms of Use" url="/terms-of-use" footer-link></li>
+  <li uitk-footer-item tkLabel="Contact Us" url="/contact" footer-link></li>
+  <uitk-footer-disclaimer footer-text>Your use of this product is governed by the terms of your company's agreement. You may not use or disclose this product
+    or allow others to use it or disclose it, except as permitted by your agreement with Optum.
+  </uitk-footer-disclaimer>
+</uitk-footer>

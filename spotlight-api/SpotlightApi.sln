@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2019
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api", "Api\Api.csproj", "{62247260-DFA3-4A62-832F-DB1C5AB48863}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C0C7D411-CC82-47F5-A681-A13EE5F259DD}"
+	ProjectSection(SolutionItems) = preProject
+		Dockerfile = Dockerfile
+		Jenkinsfile = Jenkinsfile
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Unit.Test", "Unit.Test\Unit.Test.csproj", "{C8920836-0D19-44A6-A3BE-7D7526DD9AB4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{604F0269-29AF-4877-97BA-6B2DE1C93BD0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{62247260-DFA3-4A62-832F-DB1C5AB48863}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62247260-DFA3-4A62-832F-DB1C5AB48863}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62247260-DFA3-4A62-832F-DB1C5AB48863}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62247260-DFA3-4A62-832F-DB1C5AB48863}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8920836-0D19-44A6-A3BE-7D7526DD9AB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8920836-0D19-44A6-A3BE-7D7526DD9AB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8920836-0D19-44A6-A3BE-7D7526DD9AB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8920836-0D19-44A6-A3BE-7D7526DD9AB4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C8920836-0D19-44A6-A3BE-7D7526DD9AB4} = {604F0269-29AF-4877-97BA-6B2DE1C93BD0}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3C5EFA7B-016B-4243-AE23-C5BB933027AF}
+	EndGlobalSection
+EndGlobal

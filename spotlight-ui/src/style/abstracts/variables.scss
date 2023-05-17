@@ -1,0 +1,91 @@
+/*
+• Primary palette used for screen elements
+• Secondary palette used for charts and graphs
+• Orange is used sparingly, for emphasis
+• Backgrounds are white or pale gray
+• All colors meet the WCAG 2.0 AA contrast requirements using the color contrast checker
+*/
+
+/* PRIMARY COLOURS **/
+$grey1: #282a2e;
+$grey2: #434448;
+$grey3: #63666a;
+$grey4: #888b8d;
+$grey5: #b1b2b3;
+$grey6: #d0d0ce;
+$grey7: #efefee;
+$grey8: #ecf2f9;
+$white: #ffffff;
+$accessibleOrange3: #c25608;
+$optumBrandOrange: #e87722;
+$optumBrandGold: #f2b411;
+$goState: #627d32;
+$errorState: #e32315;
+$errorStateBackground: #fce9e7;
+$textLinkBlue: #005187;
+$selectState: #dae4f3;
+
+/* SECONDARY */
+$orange1: #492003;
+$orange2: #793605;
+$orange4: #ea8636;
+$orange5: #f1b273;
+$orange6: #f6ce9e;
+$orange7: #fdf8df;
+
+$yellow1: #5a3605;
+$yellow2: #855a09;
+$yellow3: #c6900e;
+$yellow4: #f3bc29;
+$yellow5: #f6d270;
+$yellow6: #f8e1a0;
+$yellow7: #fbf8e7;
+
+$green1: #2a3615;
+$green2: #465924;
+$green3: #6e8d3a;
+$accentGreen2: #90bc53;
+$green5: #b5d28c;
+$green6: #cee1b3;
+$green7: #f3f8ec;
+
+$teal1: #033933;
+$teal2: #055f54;
+$accentTeal1: #078576;
+$teal3: #1c9182;
+$teal4: #5ab5a5;
+$accentTeal2: #6fc1b1;
+$teal5: #93d1c5;
+$teal6: #b7e0d8;
+$teal7: #edf7f5;
+
+$blue1: #002843;
+$blue2: #004370;
+$blue3: #1965ae;
+$blue4: #5686ca;
+$blue5: #8faedc;
+$blue6: #b4c9e7;
+$blue7: #ecf2f9;
+
+$purple1: #1c133a;
+$purple2: #2f1f61;
+$accentPurple1: #422c88;
+$purple3: #523995;
+$accentPurple2: #8061bc;
+$purple5: #aa96d2;
+$purple6: #c7b9e1;
+$purple7: #f1edf8;
+
+$red1: #3d1011;
+$red2: #661a1d;
+$accentRed1: #a32a2e;
+$accentRed2: #d13f44;
+$red5: #e07f82;
+$red6: #ebaaac;
+$red7: #faeaea;
+
+$circle-size: 25px;
+
+$menu-width: 260px;
+$collapse-menu-width: 55px;
+$collapse-menu-speed: .25s;

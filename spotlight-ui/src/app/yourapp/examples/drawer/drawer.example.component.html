@@ -1,0 +1,12 @@
+<button (click)="toggleLeftDrawer()">Left Toggle Drawer</button>
+<button (click)="toggleRightDrawer()">Right Toggle Drawer</button>
+<uitk-boot-drawer [isVisible]="rightHandDrawer" title="Right Hand Drawer" side="right" (onClose)="rightDrawerClose($event)">
+  <div class="my-content">
+      <span>THIS IS A TEST</span>
+  </div>
+</uitk-boot-drawer>
+<uitk-boot-drawer [isVisible]="leftHandDrawer" title="Left Hand Drawer" side="left" (onClose)="leftDrawerClose($event)">
+    <div class="my-content">
+        <span>THIS IS A TEST</span>
+    </div>
+</uitk-boot-drawer>
